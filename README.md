@@ -1,7 +1,15 @@
 # Scanner-and-Printer-for-Cplusplus
 They are like scanf and printf, but can scan from or print to what you want.
 
-To use the class named scanner, you need to implement a function `unsigned int read(char* buffer, unsigned int length)` that put chars scanned less than or equal to `length` to `buffer` and return the number of chars scanned.
+To use the class named scanner, you need to implement a function 
+``` cpp
+unsigned int read(char* buffer, unsigned int length)
+```
+or
+```cpp
+unsigned int read(char* buffer, unsigned int length, void* moreInformation)
+```
+that put chars scanned less than or equal to `length` to `buffer` and return the number of chars scanned. If you use the second version, you need to initialize the class with `moreInformation` that will be passed to the `read` function.
 
 For example, if you want to scan from response from a server, the function may be:
 ``` cpp

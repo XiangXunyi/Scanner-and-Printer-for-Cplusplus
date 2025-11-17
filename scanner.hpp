@@ -1,26 +1,32 @@
+#include <stdarg.h>
 template<unsigned int bufferLength = 1048576U>
 class scanner
 {
 private:
-	unsigned int (*read)(char*, unsigned int);
+	void* read;
 	char buffer[bufferLength];
 	unsigned int begin, end;
 	bool eof;
-	int _getchar(void)
+	void* moreInformation;
+	bool useMoreInformation;
+	void _nextchar(void)
 	{
 		if (eof)
-			return -1;
+			return;
 		if (begin == end)
 		{
-			end = read(buffer, bufferLength);
+			if (useMoreInformation)
+				end = (*(unsigned int(*)(char*, unsigned int, void*))(read))(buffer, bufferLength, moreInformation);
+			else
+				end = (*(unsigned int(*)(char*, unsigned int))(read))(buffer, bufferLength);
 			begin = 0;
 			if (end == 0)
 			{
 				eof = true;
-				return -1;
+				return;
 			}
 		}
-		return buffer[begin++];
+		++begin;
 	}
 	int _readchar(void)
 	{
@@ -28,7 +34,10 @@ private:
 			return -1;
 		if (begin == end)
 		{
-			end = read(buffer, bufferLength);
+			if (useMoreInformation)
+				end = (*(unsigned int(*)(char*, unsigned int, void*))(read))(buffer, bufferLength, moreInformation);
+			else
+				end = (*(unsigned int(*)(char*, unsigned int))(read))(buffer, bufferLength);
 			begin = 0;
 			if (end == 0)
 			{
@@ -41,6 +50,7 @@ private:
 	int _scanf(const char* format, va_list args)
 	{
 		int res = 0;
+		unsigned long long charsRead = 0;
 		while (*format)
 		{
 			if (*format == ' ' || *format == '\t' || *format == '\n' || *format == '\v' || *format == '\f' || *format == '\r')
@@ -49,7 +59,10 @@ private:
 				{
 					int c = _readchar();
 					if (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f' || c == '\r')
-						_getchar();
+					{
+						_nextchar();
+						++charsRead;
+					}
 					else
 						break;
 				}
@@ -59,7 +72,8 @@ private:
 				int c = _readchar();
 				if (c != *format)
 					break;
-				_getchar();
+				_nextchar();
+				++charsRead;
 			}
 			else
 			{
@@ -116,13 +130,16 @@ private:
 					if (c != '%')
 						break;
 					--res;
-					_getchar();
+					_nextchar();
+					++charsRead;
 				}
 				else if (*format == 'c')
 				{
 					if (width == 0)
 					{
-						int c = _getchar();
+						int c = _readchar();
+						_nextchar();
+						++charsRead;
 						if (c == -1)
 							break;
 						if (p)
@@ -132,7 +149,9 @@ private:
 					{
 						for (unsigned int i = 0; i < width; ++i)
 						{
-							int c = _getchar();
+							int c = _readchar();
+							_nextchar();
+							++charsRead;
 							if (c == -1)
 								break;
 							if (p)
@@ -146,7 +165,17 @@ private:
 				}
 				else if (*format == 'n')
 				{
-					// Not implemented yet
+					if (p)
+						if (modifier == 0)
+							*(unsigned char*)p = charsRead;
+						else if (modifier == 1)
+							*(unsigned short*)p = charsRead;
+						else if (modifier == 2)
+							*(unsigned int*)p = charsRead;
+						else if (modifier == 3)
+							*(unsigned long*)p = charsRead;
+						else
+							*(unsigned long long*)p = charsRead;
 				}
 				else
 				{
@@ -154,7 +183,10 @@ private:
 					{
 						int c = _readchar();
 						if (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f' || c == '\r')
-							_getchar();
+						{
+							_nextchar();
+							++charsRead;
+						}
 						else
 							break;
 					}
@@ -196,13 +228,15 @@ private:
 							if (c == '-')
 							{
 								negative = true;
-								_getchar();
+								_nextchar();
+								++charsRead;
 								c = _readchar();
 								--width;
 							}
 							else if (c == '+')
 							{
-								_getchar();
+								_nextchar();
+								++charsRead;
 								c = _readchar();
 								--width;
 							}
@@ -214,7 +248,8 @@ private:
 									value += c - l1;
 								else
 									value += c - l2 + 10;
-								_getchar();
+								_nextchar();
+								++charsRead;
 								--width;
 								c = _readchar();
 							}
@@ -235,13 +270,15 @@ private:
 							if (c == '-')
 							{
 								negative = true;
-								_getchar();
+								_nextchar();
+								++charsRead;
 								c = _readchar();
 								--width;
 							}
 							else if (c == '+')
 							{
-								_getchar();
+								_nextchar();
+								++charsRead;
 								c = _readchar();
 								--width;
 							}
@@ -253,7 +290,8 @@ private:
 									value += c - l1;
 								else
 									value += c - l2 + 10;
-								_getchar();
+								_nextchar();
+								++charsRead;
 								--width;
 								c = _readchar();
 							}
@@ -274,13 +312,15 @@ private:
 							if (c == '-')
 							{
 								negative = true;
-								_getchar();
+								_nextchar();
+								++charsRead;
 								c = _readchar();
 								--width;
 							}
 							else if (c == '+')
 							{
-								_getchar();
+								_nextchar();
+								++charsRead;
 								c = _readchar();
 								--width;
 							}
@@ -292,7 +332,8 @@ private:
 									value += c - l1;
 								else
 									value += c - l2 + 10;
-								_getchar();
+								_nextchar();
+								++charsRead;
 								--width;
 								c = _readchar();
 							}
@@ -313,13 +354,15 @@ private:
 							if (c == '-')
 							{
 								negative = true;
-								_getchar();
+								_nextchar();
+								++charsRead;
 								c = _readchar();
 								--width;
 							}
 							else if (c == '+')
 							{
-								_getchar();
+								_nextchar();
+								++charsRead;
 								c = _readchar();
 								--width;
 							}
@@ -331,7 +374,8 @@ private:
 									value += c - l1;
 								else
 									value += c - l2 + 10;
-								_getchar();
+								_nextchar();
+								++charsRead;
 								--width;
 								c = _readchar();
 							}
@@ -352,13 +396,15 @@ private:
 							if (c == '-')
 							{
 								negative = true;
-								_getchar();
+								_nextchar();
+								++charsRead;
 								c = _readchar();
 								--width;
 							}
 							else if (c == '+')
 							{
-								_getchar();
+								_nextchar();
+								++charsRead;
 								c = _readchar();
 								--width;
 							}
@@ -370,7 +416,8 @@ private:
 									value += c - l1;
 								else
 									value += c - l2 + 10;
-								_getchar();
+								_nextchar();
+								++charsRead;
 								--width;
 								c = _readchar();
 							}
@@ -390,7 +437,8 @@ private:
 							int c = _readchar();
 							if (c == -1 || c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f' || c == '\r')
 								break;
-							_getchar();
+							_nextchar();
+							++charsRead;
 							if (p)
 								((char*)p)[len++] = c;
 							else
@@ -403,6 +451,30 @@ private:
 						if (len == 0)
 							break;
 					}
+					else if (*format == 'p')
+					{
+						void* value = nullptr;
+						bool success = false;
+						int c = _readchar();
+						if (width == 0)
+							width = -1;
+						while (width && ('0' <= c && c <= '9' || 'A' <= c && c <= 'F'))
+						{
+							success = true;
+							if ('0' <= c && c <= '9')
+								value = (void*)((long long)(value) << 4 | (c - '0'));
+							else
+								value = (void*)((long long)(value) << 4 | (c - 'A' + 10));
+							_nextchar();
+							++charsRead;
+							--width;
+							c = _readchar();
+						}
+						if (!success)
+							break;
+						if (p)
+							*(void**)p = value;
+					}
 				}
 				++res;
 			}
@@ -414,10 +486,11 @@ private:
 		return res;
 	}
 public:
-	scanner(unsigned int (*read)(char*, unsigned int)) : read(read), begin(0), end(0), eof(false) {}
+	scanner(unsigned int (*read)(char*, unsigned int, void*), void* moreInformation) : read((void*)(read)), begin(0), end(0), eof(false), moreInformation(moreInformation), useMoreInformation(true) {}
+	scanner(unsigned int (*read)(char*, unsigned int)) : read((void*)(read)), begin(0), end(0), eof(false), moreInformation(nullptr), useMoreInformation(false) {}
 	int getchar(void)
 	{
-		return _getchar();
+		return _nextchar();
 	}
 	char* gets(char* s, unsigned int maxlen)
 	{
@@ -429,7 +502,7 @@ public:
 				*s = 0;
 				break;
 			}
-			int c = _getchar();
+			int c = _nextchar();
 			if (c == -1)
 			{
 				*s = 0;
