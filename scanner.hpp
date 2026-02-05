@@ -4,22 +4,33 @@
 
 This is a code for scanner class.
 
-The scanner class allows you to read input from the simple function @c read you implement in 3 ways:
+The scanner class allows you to read input from the simple function @c read
+you implement in 3 ways:
 
 - using @c scanf and @c operator()
-> Now it allows %(*)(number)[hh / h /  / l / ll][d / i / u / x / X / o], %%, %(*)(number)[c / s], %(*)(number)p and %n.
+> Now it allows %(*)(number)[hh / h /  / l / ll][d / i / u / x / X / o], %%,
+> %(*)(number)[c / s], %(*)(number)p and %n.
 
 - using the function named the format string
-> Now it allows (*)(number)[hh / h /  / l / ll / t / z][d / i / u / x / o], (*)(number)[ / l / L]f, (*)(number)[c / s], (*)(number)p, (*)[hh / h /  / l / ll / t / z]n
+> Now it allows (*)(number)[hh / h /  / l / ll / t / z][d / i / u / x / o],
+> (*)(number)[ / l / L]f, (*)(number)[c / s], (*)(number)p,
+> (*)[hh / h /  / l / ll / t / z]n
 
 - using @c operator>>
 > Now it allows nothing.
 
-To use the scanner class, you need to implement the function @c read which can be called through @c read(buffer, count)
-and pass it to the constructor of the scanner class.
+To use the scanner class, you need to implement the function @c read which
+can be called through @c read(buffer, count) and pass it to the constructor
+of the scanner class.
 
-The function @c read receives `char* buffer` and `unsigned int count`, which means that the function puts the next n characters
-into the buffer and returns n, where 0 < n <= count. Specially, if there is no more input, the function returns 0.
+The function @c read receives `char* buffer` and `unsigned int count`, which
+means that the function puts the next n characters into the buffer and
+returns n, where 0 < n <= count. Specially, if there is no more input, the
+function returns 0.
+
+For more information, see
+<https://github.com/XiangXunyi/Scanner-and-Printer-for-Cplusplus>.
+
 */
 
 #ifndef _SCANNER_HPP
