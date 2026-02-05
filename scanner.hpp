@@ -10,7 +10,7 @@ The scanner class allows you to read input from the simple function @c read you 
 > Now it allows %(*)(number)[hh / h /  / l / ll][d / i / u / x / X / o], %%, %(*)(number)[c / s], %(*)(number)p and %n.
 
 - using the function named the format string
-> Now it allows (*)(number)[hh / h /  / l / ll / t / z][d / i / u / x / o], %(*)(number)[c / s], %(*)(number)p
+> Now it allows (*)(number)[hh / h /  / l / ll / t / z][d / i / u / x / o], (*)(number)[ / l / L]f, %(*)(number)[c / s], %(*)(number)p
 
 - using @c operator>>
 > Now it allows nothing.
@@ -625,6 +625,646 @@ private:
 			return *this;
 		}
 
+		template<typename T>
+		scanner_stream& get_f(void* value)
+		{
+			if (!success)
+				return *this;
+			sc->_skipspace(charsRead);
+			T val = 0;
+			bool negative = false;
+			int c = sc->_readchar();
+			if (c == '-')
+			{
+				negative = true;
+				sc->_nextchar();
+				++charsRead;
+				c = sc->_readchar();
+			}
+			else if (c == '+')
+			{
+				sc->_nextchar();
+				++charsRead;
+				c = sc->_readchar();
+			}
+			success = false;
+			if (c == 'i' || c == 'I')
+			{
+				const char* infinityString1 = "inf";
+				int pos = 0;
+				while (pos != 3)
+					if (c == infinityString1[pos] || c == infinityString1[pos] - 32)
+					{
+						sc->_nextchar();
+						++charsRead;
+						c = sc->_readchar();
+						++pos;
+					}
+					else
+						break;
+				if (pos == 3)
+				{
+					if (c == 'i' || c == 'I')
+					{
+						const char* infinityString2 = "inity";
+						pos = 0;
+						while (pos != 5)
+							if (c == infinityString2[pos] || c == infinityString2[pos] - 32)
+							{
+								sc->_nextchar();
+								++charsRead;
+								c = sc->_readchar();
+								++pos;
+							}
+							else
+								break;
+						if (pos == 5)
+						{
+							success = true;
+							val = (T)(1) / (T)(0);
+						}
+						else
+						{
+							sc->_nextchar();
+							++charsRead;
+						}
+					}
+					else
+					{
+						success = true;
+						val = (T)(1) / (T)(0);
+					}
+				}
+				else
+				{
+					sc->_nextchar();
+					++charsRead;
+				}
+			}
+			else if (c == 'n' || c == 'N')
+			{
+				const char* nanString = "nan";
+				int pos = 0;
+				while (pos != 3)
+					if (c == nanString[pos] || c == nanString[pos] - 32)
+					{
+						sc->_nextchar();
+						++charsRead;
+						c = sc->_readchar();
+						++pos;
+					}
+					else
+						break;
+				if (pos == 3)
+				{
+					success = true;
+					val = (T)(0) / (T)(0);
+				}
+				else
+				{
+					sc->_nextchar();
+					++charsRead;
+				}
+			}
+			else if ('0' <= c && c <= '9' || c == '.')
+			{
+				unsigned int state = 0;
+				if (c == '0')
+				{
+					sc->_nextchar();
+					++charsRead;
+					c = sc->_readchar();
+					if (c == 'x' || c == 'X')
+					{
+						state = 4U;
+						sc->_nextchar();
+						++charsRead;
+						c = sc->_readchar();
+						T exp = 1;
+						bool goon = false;
+						while ('0' <= c && c <= '9' || 'a' <= c && c <= 'f' || 'A' <= c && c <= 'F' || c == '.' || c == 'p' || c == 'P')
+						{
+							success = true;
+							if (c == 'p' || c == 'P')
+							{
+								goon = true;
+								break;
+							}
+							if (c == '.')
+							{
+								sc->_nextchar();
+								++charsRead;
+								c = sc->_readchar();
+								goon = true;
+								break;
+							}
+							val *= 16;
+							if ('0' <= c && c <= '9')
+								val += c - '0';
+							else if ('a' <= c && c <= 'f')
+								val += c - 'a' + 10;
+							else
+								val += c - 'A' + 10;
+							sc->_nextchar();
+							++charsRead;
+							c = sc->_readchar();
+						}
+						if (goon)
+						{
+							goon = false;
+							while ('0' <= c && c <= '9' || 'a' <= c && c <= 'f' || 'A' <= c && c <= 'F' || c == 'p' || c == 'P')
+							{
+								if (c == 'p' || c == 'P')
+								{
+									goon = true;
+									sc->_nextchar();
+									++charsRead;
+									c = sc->_readchar();
+									break;
+								}
+								exp *= 0x1p-4;
+								if ('0' <= c && c <= '9')
+									val += (c - '0') * exp;
+								else if ('a' <= c && c <= 'f')
+									exp += (c - 'a' + 10) * exp;
+								else
+									exp += (c - 'A' + 10) * exp;
+								sc->_nextchar();
+								++charsRead;
+								c = sc->_readchar();
+							}
+						}
+						if (goon)
+						{
+							T base = 2;
+							if (c == '-')
+							{
+								base = 0.5;
+								sc->_nextchar();
+								++charsRead;
+								c = sc->_readchar();
+							}
+							else if (c == '+')
+							{
+								sc->_nextchar();
+								++charsRead;
+								c = sc->_readchar();
+							}
+							T pow2[10];
+							pow2[0] = 1;
+							for (int i = 1; i < 10; ++i)
+								pow2[i] = pow2[i - 1] * base;
+							T times = 1;
+							while ('0' <= c && c <= '9')
+							{
+								T tpow2 = times * times;
+								T tpow4 = tpow2 * tpow2;
+								times = tpow4 * tpow4 * tpow2;
+								times *= pow2[c - '0'];
+								sc->_nextchar();
+								++charsRead;
+								c = sc->_readchar();
+							}
+							val *= times;
+						}
+					}
+					else
+						state = 1U;
+				}
+				if (state != 4U)
+				{
+					T exp = 1;
+					bool goon = false;
+					while ('0' <= c && c <= '9' || c == '.' || c == 'e' || c == 'E')
+					{
+						if (c == 'e' || c == 'E')
+						{
+							goon = true;
+							break;
+						}
+						if (c == '.')
+						{
+							sc->_nextchar();
+							++charsRead;
+							c = sc->_readchar();
+							goon = true;
+							break;
+						}
+						state |= 1U;
+						val *= 10;
+						val += c - '0';
+						sc->_nextchar();
+						++charsRead;
+						c = sc->_readchar();
+					}
+					if (goon)
+					{
+						goon = false;
+						while ('0' <= c && c <= '9' || c == 'e' || c == 'E')
+						{
+							if (c == 'e' || c == 'E')
+							{
+								goon = true;
+								sc->_nextchar();
+								++charsRead;
+								c = sc->_readchar();
+								break;
+							}
+							state |= 2U;
+							exp *= 0.1;
+							val += (c - '0') * exp;
+							sc->_nextchar();
+							++charsRead;
+							c = sc->_readchar();
+						}
+					}
+					if (goon)
+					{
+						T base = 10;
+						if (c == '-')
+						{
+							base = 0.1;
+							sc->_nextchar();
+							++charsRead;
+							c = sc->_readchar();
+						}
+						else if (c == '+')
+						{
+							sc->_nextchar();
+							++charsRead;
+							c = sc->_readchar();
+						}
+						T pow2[10];
+						pow2[0] = 1;
+						for (int i = 1; i < 10; ++i)
+							pow2[i] = pow2[i - 1] * base;
+						T times = 1;
+						while ('0' <= c && c <= '9')
+						{
+							T tpow2 = times * times;
+							T tpow4 = tpow2 * tpow2;
+							times = tpow4 * tpow4 * tpow2;
+							times *= pow2[c - '0'];
+							sc->_nextchar();
+							++charsRead;
+							c = sc->_readchar();
+						}
+						val *= times;
+					}
+					if (state)
+						success = true;
+					else
+						val = 0;
+				}
+			}
+			if (negative)
+				val = -val;
+			if (value)
+				*(T*)(value) = val;
+			if (success)
+			{
+				if (value)
+					++res;
+			}
+			else
+				if (sc->eof && res == 0)
+					res = -1;
+			return *this;
+		}
+
+		template<typename T>
+		scanner_stream& get_f_withnumber(unsigned long long number, void* value)
+		{
+			if (!success)
+				return *this;
+			sc->_skipspace(charsRead);
+			T val = 0;
+			bool negative = false;
+			int c = sc->_readchar();
+			if (c == '-')
+			{
+				negative = true;
+				sc->_nextchar();
+				++charsRead;
+				--number;
+				c = sc->_readchar();
+			}
+			else if (c == '+')
+			{
+				sc->_nextchar();
+				++charsRead;
+				--number;
+				c = sc->_readchar();
+			}
+			success = false;
+			if (number && (c == 'i' || c == 'I'))
+			{
+				const char* infinityString1 = "inf";
+				int pos = 0;
+				while (pos != 3)
+					if (number && (c == infinityString1[pos] || c == infinityString1[pos] - 32))
+					{
+						sc->_nextchar();
+						++charsRead;
+						--number;
+						c = sc->_readchar();
+						++pos;
+					}
+					else
+						break;
+				if (pos == 3)
+				{
+					if (number && (c == 'i' || c == 'I'))
+					{
+						const char* infinityString2 = "inity";
+						pos = 0;
+						while (pos != 5)
+							if (number && (c == infinityString2[pos] || c == infinityString2[pos] - 32))
+							{
+								sc->_nextchar();
+								++charsRead;
+								--number;
+								c = sc->_readchar();
+								++pos;
+							}
+							else
+								break;
+						if (pos == 5)
+						{
+							success = true;
+							val = (T)(1) / (T)(0);
+						}
+						else
+						{
+							sc->_nextchar();
+							++charsRead;
+							--number;
+						}
+					}
+					else
+					{
+						success = true;
+						val = (T)(1) / (T)(0);
+					}
+				}
+				else
+				{
+					sc->_nextchar();
+					++charsRead;
+					--number;
+				}
+			}
+			else if (number && (c == 'n' || c == 'N'))
+			{
+				const char* nanString = "nan";
+				int pos = 0;
+				while (pos != 3)
+					if (number && (c == nanString[pos] || c == nanString[pos] - 32))
+					{
+						sc->_nextchar();
+						++charsRead;
+						--number;
+						c = sc->_readchar();
+						++pos;
+					}
+					else
+						break;
+				if (pos == 3)
+				{
+					success = true;
+					val = (T)(0) / (T)(0);
+				}
+				else
+				{
+					sc->_nextchar();
+					++charsRead;
+					--number;
+				}
+			}
+			else if (number && ('0' <= c && c <= '9' || c == '.'))
+			{
+				unsigned int state = 0;
+				if (c == '0')
+				{
+					sc->_nextchar();
+					++charsRead;
+					--number;
+					c = sc->_readchar();
+					if (number && (c == 'x' || c == 'X'))
+					{
+						state = 4U;
+						sc->_nextchar();
+						++charsRead;
+						--number;
+						c = sc->_readchar();
+						T exp = 1;
+						bool goon = false;
+						while (number && ('0' <= c && c <= '9' || 'a' <= c && c <= 'f' || 'A' <= c && c <= 'F' || c == '.' || c == 'p' || c == 'P'))
+						{
+							success = true;
+							if (c == 'p' || c == 'P')
+							{
+								goon = true;
+								break;
+							}
+							if (c == '.')
+							{
+								sc->_nextchar();
+								++charsRead;
+								--number;
+								c = sc->_readchar();
+								goon = true;
+								break;
+							}
+							val *= 16;
+							if ('0' <= c && c <= '9')
+								val += c - '0';
+							else if ('a' <= c && c <= 'f')
+								val += c - 'a' + 10;
+							else
+								val += c - 'A' + 10;
+							sc->_nextchar();
+							++charsRead;
+							--number;
+							c = sc->_readchar();
+						}
+						if (goon)
+						{
+							goon = false;
+							while (number && ('0' <= c && c <= '9' || 'a' <= c && c <= 'f' || 'A' <= c && c <= 'F' || c == 'p' || c == 'P'))
+							{
+								if (c == 'p' || c == 'P')
+								{
+									goon = true;
+									sc->_nextchar();
+									++charsRead;
+									--number;
+									c = sc->_readchar();
+									break;
+								}
+								exp *= 0x1p-4;
+								if ('0' <= c && c <= '9')
+									val += (c - '0') * exp;
+								else if ('a' <= c && c <= 'f')
+									exp += (c - 'a' + 10) * exp;
+								else
+									exp += (c - 'A' + 10) * exp;
+								sc->_nextchar();
+								++charsRead;
+								--number;
+								c = sc->_readchar();
+							}
+						}
+						if (goon)
+						{
+							T base = 2;
+							if (number)
+								if (c == '-')
+								{
+									base = 0.5;
+									sc->_nextchar();
+									++charsRead;
+									--number;
+									c = sc->_readchar();
+								}
+								else if (c == '+')
+								{
+									sc->_nextchar();
+									++charsRead;
+									--number;
+									c = sc->_readchar();
+								}
+							T pow2[10];
+							pow2[0] = 1;
+							for (int i = 1; i < 10; ++i)
+								pow2[i] = pow2[i - 1] * base;
+							T times = 1;
+							while (number && '0' <= c && c <= '9')
+							{
+								T tpow2 = times * times;
+								T tpow4 = tpow2 * tpow2;
+								times = tpow4 * tpow4 * tpow2;
+								times *= pow2[c - '0'];
+								sc->_nextchar();
+								++charsRead;
+								--number;
+								c = sc->_readchar();
+							}
+							val *= times;
+						}
+					}
+					else
+						state = 1U;
+				}
+				if (state != 4U)
+				{
+					T exp = 1;
+					bool goon = false;
+					while (number && ('0' <= c && c <= '9' || c == '.' || c == 'e' || c == 'E'))
+					{
+						if (c == 'e' || c == 'E')
+						{
+							goon = true;
+							break;
+						}
+						if (c == '.')
+						{
+							sc->_nextchar();
+							++charsRead;
+							--number;
+							c = sc->_readchar();
+							goon = true;
+							break;
+						}
+						state |= 1U;
+						val *= 10;
+						val += c - '0';
+						sc->_nextchar();
+						++charsRead;
+						--number;
+						c = sc->_readchar();
+					}
+					if (goon)
+					{
+						goon = false;
+						while (number && ('0' <= c && c <= '9' || c == 'e' || c == 'E'))
+						{
+							if (c == 'e' || c == 'E')
+							{
+								goon = true;
+								sc->_nextchar();
+								++charsRead;
+								--number;
+								c = sc->_readchar();
+								break;
+							}
+							state |= 2U;
+							exp *= 0.1;
+							val += (c - '0') * exp;
+							sc->_nextchar();
+							++charsRead;
+							--number;
+							c = sc->_readchar();
+						}
+					}
+					if (goon)
+					{
+						T base = 10;
+						if (number)
+							if (c == '-')
+							{
+								base = 0.1;
+								sc->_nextchar();
+								++charsRead;
+								--number;
+								c = sc->_readchar();
+							}
+							else if (c == '+')
+							{
+								sc->_nextchar();
+								++charsRead;
+								--number;
+								c = sc->_readchar();
+							}
+						T pow2[10];
+						pow2[0] = 1;
+						for (int i = 1; i < 10; ++i)
+							pow2[i] = pow2[i - 1] * base;
+						T times = 1;
+						while (number && '0' <= c && c <= '9')
+						{
+							T tpow2 = times * times;
+							T tpow4 = tpow2 * tpow2;
+							times = tpow4 * tpow4 * tpow2;
+							times *= pow2[c - '0'];
+							sc->_nextchar();
+							++charsRead;
+							--number;
+							c = sc->_readchar();
+						}
+						val *= times;
+					}
+					if (state)
+						success = true;
+					else
+						val = 0;
+				}
+			}
+			if (negative)
+				val = -val;
+			if (value)
+				*(T*)(value) = val;
+			if (success)
+			{
+				if (value)
+					++res;
+			}
+			else
+				if (sc->eof && res == 0)
+					res = -1;
+			return *this;
+		}
+
 	public:
 		scanner_stream(scanner* s) : sc(s), charsRead(0ULL), success(true), res(0) {}
 
@@ -1156,6 +1796,54 @@ private:
 		scanner_stream& zo(unsigned long long number, void* value = nullptr) { return get_o_withnumber<size_t>(number, value); }
 
 		/**
+		 * @brief like @c "%f" in scanf
+		 * @param number The maximum number of characters to read
+		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @return the class itself
+		 */
+		scanner_stream& f(void* value = nullptr) { return get_f<float>(value); }
+
+		/**
+		 * @brief like @c "%[number]f" in scanf
+		 * @param number The maximum number of characters to read
+		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @return the class itself
+		 */
+		scanner_stream& f(unsigned long long number, void* value = nullptr) { return get_f_withnumber<float>(number, value); }
+
+		/**
+		 * @brief like @c "%lf" in scanf
+		 * @param number The maximum number of characters to read
+		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @return the class itself
+		 */
+		scanner_stream& lf(void* value = nullptr) { return get_f<double>(value); }
+
+		/**
+		 * @brief like @c "%[number]lf" in scanf
+		 * @param number The maximum number of characters to read
+		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @return the class itself
+		 */
+		scanner_stream& lf(unsigned long long number, void* value = nullptr) { return get_f_withnumber<double>(number, value); }
+
+		/**
+		 * @brief like @c "%Lf" in scanf
+		 * @param number The maximum number of characters to read
+		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @return the class itself
+		 */
+		scanner_stream& Lf(void* value = nullptr) { return get_f<long double>(value); }
+
+		/**
+		 * @brief like @c "%[number]Lf" in scanf
+		 * @param number The maximum number of characters to read
+		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @return the class itself
+		 */
+		scanner_stream& Lf(unsigned long long number, void* value = nullptr) { return get_f_withnumber<long double>(number, value); }
+
+		/**
 		 * @brief like @c "%c" in scanf
 		 * @param number The maximum number of characters to read
 		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
@@ -1248,6 +1936,7 @@ private:
 			}
 			if (success)
 			{
+				*(((char*&)(value))++) = 0;
 				if (value)
 					++res;
 			}
@@ -1282,6 +1971,7 @@ private:
 			}
 			if (success)
 			{
+				*(((char*&)(value))++) = 0;
 				if (value)
 					++res;
 			}
@@ -2563,6 +3253,72 @@ public:
 	scanner_stream zo(unsigned long long number, void* value = nullptr)
 	{
 		return scanner_stream(this).zo(number, value);
+	}
+
+	/**
+	 * @brief like @c "%f" in scanf
+	 * @param number The maximum number of characters to read
+	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @return the class itself
+	 */
+	scanner_stream f(void* value = nullptr)
+	{
+		return scanner_stream(this).get_f<float>(value);
+	}
+
+	/**
+	 * @brief like @c "%[number]f" in scanf
+	 * @param number The maximum number of characters to read
+	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @return the class itself
+	 */
+	scanner_stream f(unsigned long long number, void* value = nullptr)
+	{
+		return scanner_stream(this).get_f_withnumber<float>(number, value);
+	}
+
+	/**
+	 * @brief like @c "%lf" in scanf
+	 * @param number The maximum number of characters to read
+	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @return the class itself
+	 */
+	scanner_stream lf(void* value = nullptr)
+	{
+		return scanner_stream(this).get_f<double>(value);
+	}
+
+	/**
+	 * @brief like @c "%[number]lf" in scanf
+	 * @param number The maximum number of characters to read
+	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @return the class itself
+	 */
+	scanner_stream lf(unsigned long long number, void* value = nullptr)
+	{
+		return scanner_stream(this).get_f_withnumber<double>(number, value);
+	}
+
+	/**
+	 * @brief like @c "%Lf" in scanf
+	 * @param number The maximum number of characters to read
+	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @return the class itself
+	 */
+	scanner_stream Lf(void* value = nullptr)
+	{
+		return scanner_stream(this).get_f<long double>(value);
+	}
+
+	/**
+	 * @brief like @c "%[number]Lf" in scanf
+	 * @param number The maximum number of characters to read
+	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @return the class itself
+	 */
+	scanner_stream Lf(unsigned long long number, void* value = nullptr)
+	{
+		return scanner_stream(this).get_f_withnumber<long double>(number, value);
 	}
 
 	/**
