@@ -3339,7 +3339,7 @@ public:
 	 */
 	scanner_stream f(void* value = nullptr)
 	{
-		return scanner_stream(this).get_f<float>(value);
+		return scanner_stream(this).f(value);
 	}
 
 	/**
@@ -3350,7 +3350,7 @@ public:
 	 */
 	scanner_stream f(unsigned long long number, void* value = nullptr)
 	{
-		return scanner_stream(this).get_f_withnumber<float>(number, value);
+		return scanner_stream(this).f(number, value);
 	}
 
 	/**
@@ -3361,7 +3361,7 @@ public:
 	 */
 	scanner_stream lf(void* value = nullptr)
 	{
-		return scanner_stream(this).get_f<double>(value);
+		return scanner_stream(this).lf(value);
 	}
 
 	/**
@@ -3372,7 +3372,7 @@ public:
 	 */
 	scanner_stream lf(unsigned long long number, void* value = nullptr)
 	{
-		return scanner_stream(this).get_f_withnumber<double>(number, value);
+		return scanner_stream(this).lf(number, value);
 	}
 
 	/**
@@ -3383,7 +3383,7 @@ public:
 	 */
 	scanner_stream Lf(void* value = nullptr)
 	{
-		return scanner_stream(this).get_f<long double>(value);
+		return scanner_stream(this).Lf(value);
 	}
 
 	/**
@@ -3394,7 +3394,7 @@ public:
 	 */
 	scanner_stream Lf(unsigned long long number, void* value = nullptr)
 	{
-		return scanner_stream(this).get_f_withnumber<long double>(number, value);
+		return scanner_stream(this).Lf(number, value);
 	}
 
 	/**
@@ -3467,7 +3467,7 @@ public:
 	 */
 	scanner_stream& hhn(void* value = nullptr)
 	{
-		return scanner_stream(this).hhn(number, value);
+		return scanner_stream(this).hhn(value);
 	}
 
 	/**
@@ -3477,7 +3477,7 @@ public:
 	 */
 	scanner_stream& hn(void* value = nullptr)
 	{
-		return scanner_stream(this).hn(number, value);
+		return scanner_stream(this).hn(value);
 	}
 
 	/**
@@ -3487,7 +3487,7 @@ public:
 	 */
 	scanner_stream& n(void* value = nullptr)
 	{
-		return scanner_stream(this).n(number, value);
+		return scanner_stream(this).n(value);
 	}
 
 	/**
@@ -3497,7 +3497,7 @@ public:
 	 */
 	scanner_stream& ln(void* value = nullptr)
 	{
-		return scanner_stream(this).ln(number, value);
+		return scanner_stream(this).ln(value);
 	}
 
 	/**
@@ -3507,7 +3507,7 @@ public:
 	 */
 	scanner_stream& lln(void* value = nullptr)
 	{
-		return scanner_stream(this).lln(number, value);
+		return scanner_stream(this).lln(value);
 	}
 
 	/**
@@ -3517,7 +3517,7 @@ public:
 	 */
 	scanner_stream& tn(void* value = nullptr)
 	{
-		return scanner_stream(this).tn(number, value);
+		return scanner_stream(this).tn(value);
 	}
 
 	/**
@@ -3527,7 +3527,7 @@ public:
 	 */
 	scanner_stream& zn(void* value = nullptr)
 	{
-		return scanner_stream(this).zn(number, value);
+		return scanner_stream(this).zn(value);
 	}
 };
 
