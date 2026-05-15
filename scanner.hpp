@@ -1286,9 +1286,6 @@ private:
 				*(T*)(value) = charsRead;
 				++res;
 			}
-			else
-				if (sc->eof && res == 0)
-					res = -1;
 			return *this;
 		}
 
@@ -1299,7 +1296,7 @@ private:
 
 		/**
 		 * @brief like @c "%hhd" in scanf
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c signed char variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& hhd(void* value = nullptr) { return get_d<signed char>(value); }
@@ -1307,14 +1304,14 @@ private:
 		/**
 		 * @brief like @c "%[number]hhd" in scanf
 		 * @param number The maximum number of characters to read
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c signed char variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& hhd(unsigned long long number, void* value = nullptr) { return get_d_withnumber<signed char>(number, value); }
 
 		/**
 		 * @brief like @c "%hd" in scanf
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c signed short variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& hd(void* value = nullptr) { return get_d<signed short>(value); }
@@ -1322,14 +1319,14 @@ private:
 		/**
 		 * @brief like @c "%[number]hd" in scanf
 		 * @param number The maximum number of characters to read
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c signed short variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& hd(unsigned long long number, void* value = nullptr) { return get_d_withnumber<signed short>(number, value); }
 
 		/**
 		 * @brief like @c "%d" in scanf
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c signed char variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& d(void* value = nullptr) { return get_d<signed int>(value); }
@@ -1337,14 +1334,14 @@ private:
 		/**
 		 * @brief like @c "%[number]d" in scanf
 		 * @param number The maximum number of characters to read
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c signed char variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& d(unsigned long long number, void* value = nullptr) { return get_d_withnumber<signed int>(number, value); }
 
 		/**
 		 * @brief like @c "%ld" in scanf
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c signed long variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& ld(void* value = nullptr) { return get_d<signed long>(value); }
@@ -1352,14 +1349,14 @@ private:
 		/**
 		 * @brief like @c "%[number]ld" in scanf
 		 * @param number The maximum number of characters to read
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c signed long variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& ld(unsigned long long number, void* value = nullptr) { return get_d_withnumber<signed long>(number, value); }
 
 		/**
 		 * @brief like @c "%lld" in scanf
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c signed long long variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& lld(void* value = nullptr) { return get_d<signed long long>(value); }
@@ -1367,14 +1364,14 @@ private:
 		/**
 		 * @brief like @c "%[number]lld" in scanf
 		 * @param number The maximum number of characters to read
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c signed long long variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& lld(unsigned long long number, void* value = nullptr) { return get_d_withnumber<signed long long>(number, value); }
 
 		/**
 		 * @brief like @c "%td" in scanf
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c ptrdiff_t variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& td(void* value = nullptr) { return get_d<ptrdiff_t>(value); }
@@ -1382,14 +1379,14 @@ private:
 		/**
 		 * @brief like @c "%[number]td" in scanf
 		 * @param number The maximum number of characters to read
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c ptrdiff_t variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& td(unsigned long long number, void* value = nullptr) { return get_d_withnumber<ptrdiff_t>(number, value); }
 
 		/**
 		 * @brief like @c "%zd" in scanf
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c size_t variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& zd(void* value = nullptr) { return get_d<size_t>(value); }
@@ -1397,14 +1394,14 @@ private:
 		/**
 		 * @brief like @c "%[number]zd" in scanf
 		 * @param number The maximum number of characters to read
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c size_t variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& zd(unsigned long long number, void* value = nullptr) { return get_d_withnumber<size_t>(number, value); }
 
 		/**
 		 * @brief like @c "%hhi" in scanf
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c signed char variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& hhi(void* value = nullptr) { return get_i<signed char>(value); }
@@ -1412,14 +1409,14 @@ private:
 		/**
 		 * @brief like @c "%[number]hhi" in scanf
 		 * @param number The maximum number of characters to read
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c signed char variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& hhi(unsigned long long number, void* value = nullptr) { return get_i_withnumber<signed char>(number, value); }
 
 		/**
 		 * @brief like @c "%hi" in scanf
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c signed short variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& hi(void* value = nullptr) { return get_i<signed short>(value); }
@@ -1427,14 +1424,14 @@ private:
 		/**
 		 * @brief like @c "%[number]hi" in scanf
 		 * @param number The maximum number of characters to read
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c signed short variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& hi(unsigned long long number, void* value = nullptr) { return get_i_withnumber<signed short>(number, value); }
 
 		/**
 		 * @brief like @c "%i" in scanf
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c signed int variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& i(void* value = nullptr) { return get_i<signed int>(value); }
@@ -1442,14 +1439,14 @@ private:
 		/**
 		 * @brief like @c "%[number]i" in scanf
 		 * @param number The maximum number of characters to read
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c signed int variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& i(unsigned long long number, void* value = nullptr) { return get_i_withnumber<signed int>(number, value); }
 
 		/**
 		 * @brief like @c "%li" in scanf
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c signed long variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& li(void* value = nullptr) { return get_i<signed long>(value); }
@@ -1457,14 +1454,14 @@ private:
 		/**
 		 * @brief like @c "%[number]li" in scanf
 		 * @param number The maximum number of characters to read
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c signed long variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& li(unsigned long long number, void* value = nullptr) { return get_i_withnumber<signed long>(number, value); }
 
 		/**
 		 * @brief like @c "%lli" in scanf
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c signed long long variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& lli(void* value = nullptr) { return get_i<signed long long>(value); }
@@ -1472,14 +1469,14 @@ private:
 		/**
 		 * @brief like @c "%[number]lli" in scanf
 		 * @param number The maximum number of characters to read
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c signed long long variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& lli(unsigned long long number, void* value = nullptr) { return get_i_withnumber<signed long long>(number, value); }
 
 		/**
 		 * @brief like @c "%ti" in scanf
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c ptrdiff_t variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& ti(void* value = nullptr) { return get_i<ptrdiff_t>(value); }
@@ -1487,14 +1484,14 @@ private:
 		/**
 		 * @brief like @c "%[number]ti" in scanf
 		 * @param number The maximum number of characters to read
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c ptrdiff_t variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& ti(unsigned long long number, void* value = nullptr) { return get_i_withnumber<ptrdiff_t>(number, value); }
 
 		/**
 		 * @brief like @c "%zi" in scanf
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c size_t variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& zi(void* value = nullptr) { return get_i<size_t>(value); }
@@ -1502,14 +1499,14 @@ private:
 		/**
 		 * @brief like @c "%[number]zi" in scanf
 		 * @param number The maximum number of characters to read
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c size_t variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& zi(unsigned long long number, void* value = nullptr) { return get_i_withnumber<size_t>(number, value); }
 
 		/**
 		 * @brief like @c "%hhu" in scanf
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c unsigned char variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& hhu(void* value = nullptr) { return get_d<unsigned char>(value); }
@@ -1517,14 +1514,14 @@ private:
 		/**
 		 * @brief like @c "%[number]hhu" in scanf
 		 * @param number The maximum number of characters to read
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c unsigned char variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& hhu(unsigned long long number, void* value = nullptr) { return get_d_withnumber<unsigned char>(number, value); }
 
 		/**
 		 * @brief like @c "%hu" in scanf
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c unsigned short variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& hu(void* value = nullptr) { return get_d<unsigned short>(value); }
@@ -1532,14 +1529,14 @@ private:
 		/**
 		 * @brief like @c "%[number]hu" in scanf
 		 * @param number The maximum number of characters to read
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c unsigned short variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& hu(unsigned long long number, void* value = nullptr) { return get_d_withnumber<unsigned short>(number, value); }
 
 		/**
 		 * @brief like @c "%u" in scanf
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c unsigned int variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& u(void* value = nullptr) { return get_d<unsigned int>(value); }
@@ -1547,14 +1544,14 @@ private:
 		/**
 		 * @brief like @c "%[number]u" in scanf
 		 * @param number The maximum number of characters to read
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c unsigned int variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& u(unsigned long long number, void* value = nullptr) { return get_d_withnumber<unsigned int>(number, value); }
 
 		/**
 		 * @brief like @c "%lu" in scanf
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c unsigned long variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& lu(void* value = nullptr) { return get_d<unsigned long>(value); }
@@ -1562,14 +1559,14 @@ private:
 		/**
 		 * @brief like @c "%[number]lu" in scanf
 		 * @param number The maximum number of characters to read
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c unsigned long variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& lu(unsigned long long number, void* value = nullptr) { return get_d_withnumber<unsigned long>(number, value); }
 
 		/**
 		 * @brief like @c "%llu" in scanf
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c unsigned long long variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& llu(void* value = nullptr) { return get_d<unsigned long long>(value); }
@@ -1577,14 +1574,14 @@ private:
 		/**
 		 * @brief like @c "%[number]llu" in scanf
 		 * @param number The maximum number of characters to read
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c unsigned long long variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& llu(unsigned long long number, void* value = nullptr) { return get_d_withnumber<unsigned long long>(number, value); }
 
 		/**
 		 * @brief like @c "%tu" in scanf
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c ptrdiff_t variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& tu(void* value = nullptr) { return get_d<ptrdiff_t>(value); }
@@ -1592,14 +1589,14 @@ private:
 		/**
 		 * @brief like @c "%[number]tu" in scanf
 		 * @param number The maximum number of characters to read
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c ptrdiff_t variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& tu(unsigned long long number, void* value = nullptr) { return get_d_withnumber<ptrdiff_t>(number, value); }
 
 		/**
 		 * @brief like @c "%zu" in scanf
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c size_t variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& zu(void* value = nullptr) { return get_d<size_t>(value); }
@@ -1607,14 +1604,14 @@ private:
 		/**
 		 * @brief like @c "%[number]zu" in scanf
 		 * @param number The maximum number of characters to read
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c size_t variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& zu(unsigned long long number, void* value = nullptr) { return get_d_withnumber<size_t>(number, value); }
 
 		/**
 		 * @brief like @c "%hhx" in scanf
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to an @c unsigned char variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& hhx(void* value = nullptr) { return get_x<unsigned char>(value); }
@@ -1622,14 +1619,14 @@ private:
 		/**
 		 * @brief like @c "%[number]hhx" in scanf
 		 * @param number The maximum number of characters to read
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to an @c unsigned char variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& hhx(unsigned long long number, void* value = nullptr) { return get_x_withnumber<unsigned char>(number, value); }
 
 		/**
 		 * @brief like @c "%hx" in scanf
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to an @c unsigned short variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& hx(void* value = nullptr) { return get_x<unsigned short>(value); }
@@ -1637,14 +1634,14 @@ private:
 		/**
 		 * @brief like @c "%[number]hx" in scanf
 		 * @param number The maximum number of characters to read
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to an @c unsigned short variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& hx(unsigned long long number, void* value = nullptr) { return get_x_withnumber<unsigned short>(number, value); }
 
 		/**
 		 * @brief like @c "%x" in scanf
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to an @c unsigned int variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& x(void* value = nullptr) { return get_x<unsigned int>(value); }
@@ -1652,14 +1649,14 @@ private:
 		/**
 		 * @brief like @c "%[number]x" in scanf
 		 * @param number The maximum number of characters to read
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to an @c unsigned int variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& x(unsigned long long number, void* value = nullptr) { return get_x_withnumber<unsigned int>(number, value); }
 
 		/**
 		 * @brief like @c "%lx" in scanf
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to an @c unsigned long variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& lx(void* value = nullptr) { return get_x<unsigned long>(value); }
@@ -1667,14 +1664,14 @@ private:
 		/**
 		 * @brief like @c "%[number]lx" in scanf
 		 * @param number The maximum number of characters to read
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to an @c unsigned long variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& lx(unsigned long long number, void* value = nullptr) { return get_x_withnumber<unsigned long>(number, value); }
 
 		/**
 		 * @brief like @c "%llx" in scanf
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to an @c unsigned long long variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& llx(void* value = nullptr) { return get_x<unsigned long long>(value); }
@@ -1682,14 +1679,14 @@ private:
 		/**
 		 * @brief like @c "%[number]llx" in scanf
 		 * @param number The maximum number of characters to read
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to an @c unsigned long long variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& llx(unsigned long long number, void* value = nullptr) { return get_x_withnumber<unsigned long long>(number, value); }
 
 		/**
 		 * @brief like @c "%tx" in scanf
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c ptrdiff_t variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& tx(void* value = nullptr) { return get_x<ptrdiff_t>(value); }
@@ -1697,14 +1694,14 @@ private:
 		/**
 		 * @brief like @c "%[number]tx" in scanf
 		 * @param number The maximum number of characters to read
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c ptrdiff_t variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& tx(unsigned long long number, void* value = nullptr) { return get_x_withnumber<ptrdiff_t>(number, value); }
 
 		/**
 		 * @brief like @c "%zx" in scanf
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c size_t variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& zx(void* value = nullptr) { return get_x<size_t>(value); }
@@ -1712,14 +1709,14 @@ private:
 		/**
 		 * @brief like @c "%[number]zx" in scanf
 		 * @param number The maximum number of characters to read
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c size_t variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& zx(unsigned long long number, void* value = nullptr) { return get_x_withnumber<size_t>(number, value); }
 
 		/**
 		 * @brief like @c "%hho" in scanf
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to an @c unsigned char variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& hho(void* value = nullptr) { return get_o<unsigned char>(value); }
@@ -1727,14 +1724,14 @@ private:
 		/**
 		 * @brief like @c "%[number]hho" in scanf
 		 * @param number The maximum number of characters to read
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to an @c unsigned char variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& hho(unsigned long long number, void* value = nullptr) { return get_o_withnumber<unsigned char>(number, value); }
 
 		/**
 		 * @brief like @c "%ho" in scanf
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to an @c unsigned short variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& ho(void* value = nullptr) { return get_o<unsigned short>(value); }
@@ -1742,14 +1739,14 @@ private:
 		/**
 		 * @brief like @c "%[number]ho" in scanf
 		 * @param number The maximum number of characters to read
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to an @c unsigned short variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& ho(unsigned long long number, void* value = nullptr) { return get_o_withnumber<unsigned short>(number, value); }
 
 		/**
 		 * @brief like @c "%o" in scanf
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to an @c unsigned int variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& o(void* value = nullptr) { return get_o<unsigned int>(value); }
@@ -1757,14 +1754,14 @@ private:
 		/**
 		 * @brief like @c "%[number]o" in scanf
 		 * @param number The maximum number of characters to read
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to an @c unsigned int variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& o(unsigned long long number, void* value = nullptr) { return get_o_withnumber<unsigned int>(number, value); }
 
 		/**
 		 * @brief like @c "%lo" in scanf
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to an @c unsigned long variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& lo(void* value = nullptr) { return get_o<unsigned long>(value); }
@@ -1772,14 +1769,14 @@ private:
 		/**
 		 * @brief like @c "%[number]lo" in scanf
 		 * @param number The maximum number of characters to read
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to an @c unsigned long variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& lo(unsigned long long number, void* value = nullptr) { return get_o_withnumber<unsigned long>(number, value); }
 
 		/**
 		 * @brief like @c "%llo" in scanf
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to an @c unsigned long long variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& llo(void* value = nullptr) { return get_o<unsigned long long>(value); }
@@ -1787,14 +1784,14 @@ private:
 		/**
 		 * @brief like @c "%[number]llo" in scanf
 		 * @param number The maximum number of characters to read
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to an @c unsigned long long variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& llo(unsigned long long number, void* value = nullptr) { return get_o_withnumber<unsigned long long>(number, value); }
 
 		/**
 		 * @brief like @c "%to" in scanf
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c ptrdiff_t variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& to(void* value = nullptr) { return get_o<ptrdiff_t>(value); }
@@ -1802,14 +1799,14 @@ private:
 		/**
 		 * @brief like @c "%[number]to" in scanf
 		 * @param number The maximum number of characters to read
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c ptrdiff_t variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& to(unsigned long long number, void* value = nullptr) { return get_o_withnumber<ptrdiff_t>(number, value); }
 
 		/**
 		 * @brief like @c "%zo" in scanf
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c size_t variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& zo(void* value = nullptr) { return get_o<size_t>(value); }
@@ -1817,7 +1814,7 @@ private:
 		/**
 		 * @brief like @c "%[number]zo" in scanf
 		 * @param number The maximum number of characters to read
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c size_t variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& zo(unsigned long long number, void* value = nullptr) { return get_o_withnumber<size_t>(number, value); }
@@ -1825,7 +1822,7 @@ private:
 		/**
 		 * @brief like @c "%f" in scanf
 		 * @param number The maximum number of characters to read
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c float variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& f(void* value = nullptr) { return get_f<float>(value); }
@@ -1833,7 +1830,7 @@ private:
 		/**
 		 * @brief like @c "%[number]f" in scanf
 		 * @param number The maximum number of characters to read
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c float variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& f(unsigned long long number, void* value = nullptr) { return get_f_withnumber<float>(number, value); }
@@ -1841,7 +1838,7 @@ private:
 		/**
 		 * @brief like @c "%lf" in scanf
 		 * @param number The maximum number of characters to read
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c double variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& lf(void* value = nullptr) { return get_f<double>(value); }
@@ -1849,7 +1846,7 @@ private:
 		/**
 		 * @brief like @c "%[number]lf" in scanf
 		 * @param number The maximum number of characters to read
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c double variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& lf(unsigned long long number, void* value = nullptr) { return get_f_withnumber<double>(number, value); }
@@ -1857,7 +1854,7 @@ private:
 		/**
 		 * @brief like @c "%Lf" in scanf
 		 * @param number The maximum number of characters to read
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c long double variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& Lf(void* value = nullptr) { return get_f<long double>(value); }
@@ -1865,7 +1862,7 @@ private:
 		/**
 		 * @brief like @c "%[number]Lf" in scanf
 		 * @param number The maximum number of characters to read
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c long double variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& Lf(unsigned long long number, void* value = nullptr) { return get_f_withnumber<long double>(number, value); }
@@ -1873,7 +1870,7 @@ private:
 		/**
 		 * @brief like @c "%c" in scanf
 		 * @param number The maximum number of characters to read
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a @c char variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& c(void* value = nullptr)
@@ -1907,7 +1904,7 @@ private:
 		/**
 		 * @brief like @c "%[number]c" in scanf
 		 * @param number The maximum number of characters to read
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a string variable or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& c(unsigned long long number, void* value = nullptr)
@@ -2010,7 +2007,7 @@ private:
 
 		/**
 		 * @brief like @c "%p" in scanf
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a void pointer variable or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& p(void* value = nullptr) { return get_x<size_t>(value); }
@@ -2018,56 +2015,56 @@ private:
 		/**
 		 * @brief like @c "%[number]p" in scanf
 		 * @param number The maximum number of characters to read
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to a void pointer variable or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& p(unsigned long long number, void* value = nullptr) { return get_x_withnumber<size_t>(number, value); }
 
 		/**
 		 * @brief like @c "%hhn" in scanf
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to an @c signed char variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& hhn(void* value = nullptr) { return get_n<signed char>(value); }
 
 		/**
 		 * @brief like @c "%hn" in scanf
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to an @c signed short variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& hn(void* value = nullptr) { return get_n<signed short>(value); }
 
 		/**
 		 * @brief like @c "%n" in scanf
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to an @c signed int variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& n(void* value = nullptr) { return get_n<signed int>(value); }
 
 		/**
 		 * @brief like @c "%ln" in scanf
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to an @c signed long variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& ln(void* value = nullptr) { return get_n<signed long>(value); }
 
 		/**
 		 * @brief like @c "%lln" in scanf
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to an @c signed long long variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& lln(void* value = nullptr) { return get_n<signed long long>(value); }
 
 		/**
 		 * @brief like @c "%tn" in scanf
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to an @c signed ptrdiff_t variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& tn(void* value = nullptr) { return get_n<ptrdiff_t>(value); }
 
 		/**
 		 * @brief like @c "%zn" in scanf
-		 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+		 * @param value Pointer to an @c signed size_t variables or @c nullptr if you don't want to read the value
 		 * @return the class itself
 		 */
 		scanner_stream& zn(void* value = nullptr) { return get_n<size_t>(value); }
@@ -2574,7 +2571,7 @@ public:
 	 * @brief scanf function
 	 * @param format Format string
 	 * @param ... Variable arguments
-	 * @return Number of successful matches or -1 if end of file is reached
+	 * @return Number of successful matches or -1 if end of file is reached before any matches
 	 */
 	int scanf(const char* format, ...)
 	{
@@ -2587,7 +2584,8 @@ public:
 	 * @brief scanf function
 	 * @param format Format string
 	 * @param ... Variable arguments
-	 * @return Number of successful matches or -1 if end of file is reached
+	 * @return Number of successful matches or -1 if end of file is reached before any matches
+	 * @note This function is provided for convenience and is equivalent to calling @c scanf with
 	 */
 	int operator()(const char* format, ...)
 	{
@@ -2598,7 +2596,7 @@ public:
 
 	/**
 	 * @brief like @c "%hhd" in scanf
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c signed char variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream hhd(void* value = nullptr)
@@ -2609,7 +2607,7 @@ public:
 	/**
 	 * @brief like @c "%[number]hhd" in scanf
 	 * @param number The maximum number of characters to read
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c signed char variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream hhd(unsigned long long number, void* value = nullptr)
@@ -2619,7 +2617,7 @@ public:
 
 	/**
 	 * @brief like @c "%hd" in scanf
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c signed short variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream hd(void* value = nullptr)
@@ -2630,7 +2628,7 @@ public:
 	/**
 	 * @brief like @c "%[number]hd" in scanf
 	 * @param number The maximum number of characters to read
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c signed short variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream hd(unsigned long long number, void* value = nullptr)
@@ -2640,7 +2638,7 @@ public:
 
 	/**
 	 * @brief like @c "%d" in scanf
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c signed int variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream d(void* value = nullptr)
@@ -2651,7 +2649,7 @@ public:
 	/**
 	 * @brief like @c "%[number]d" in scanf
 	 * @param number The maximum number of characters to read
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c signed int variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream d(unsigned long long number, void* value = nullptr)
@@ -2661,7 +2659,7 @@ public:
 
 	/**
 	 * @brief like @c "%ld" in scanf
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c signed long variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream ld(void* value = nullptr)
@@ -2672,7 +2670,7 @@ public:
 	/**
 	 * @brief like @c "%[number]ld" in scanf
 	 * @param number The maximum number of characters to read
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c signed long variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream ld(unsigned long long number, void* value = nullptr)
@@ -2682,7 +2680,7 @@ public:
 
 	/**
 	 * @brief like @c "%lld" in scanf
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c signed long long variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream lld(void* value = nullptr)
@@ -2693,7 +2691,7 @@ public:
 	/**
 	 * @brief like @c "%[number]lld" in scanf
 	 * @param number The maximum number of characters to read
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c signed long long variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream lld(unsigned long long number, void* value = nullptr)
@@ -2703,7 +2701,7 @@ public:
 
 	/**
 	 * @brief like @c "%td" in scanf
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c ptrdiff_t variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream td(void* value = nullptr)
@@ -2714,7 +2712,7 @@ public:
 	/**
 	 * @brief like @c "%[number]td" in scanf
 	 * @param number The maximum number of characters to read
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c ptrdiff_t variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream td(unsigned long long number, void* value = nullptr)
@@ -2724,7 +2722,7 @@ public:
 
 	/**
 	 * @brief like @c "%zd" in scanf
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c size_t variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream zd(void* value = nullptr)
@@ -2735,7 +2733,7 @@ public:
 	/**
 	 * @brief like @c "%[number]zd" in scanf
 	 * @param number The maximum number of characters to read
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c size_t variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream zd(unsigned long long number, void* value = nullptr)
@@ -2745,7 +2743,7 @@ public:
 
 	/**
 	 * @brief like @c "%hhi" in scanf
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c signed char variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream hhi(void* value = nullptr)
@@ -2756,7 +2754,7 @@ public:
 	/**
 	 * @brief like @c "%[number]hhi" in scanf
 	 * @param number The maximum number of characters to read
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c signed char variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream hhi(unsigned long long number, void* value = nullptr)
@@ -2766,7 +2764,7 @@ public:
 
 	/**
 	 * @brief like @c "%hi" in scanf
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c signed short variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream hi(void* value = nullptr)
@@ -2777,7 +2775,7 @@ public:
 	/**
 	 * @brief like @c "%[number]hi" in scanf
 	 * @param number The maximum number of characters to read
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c signed short variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream hi(unsigned long long number, void* value = nullptr)
@@ -2787,7 +2785,7 @@ public:
 
 	/**
 	 * @brief like @c "%i" in scanf
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c signed int variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream i(void* value = nullptr)
@@ -2798,7 +2796,7 @@ public:
 	/**
 	 * @brief like @c "%[number]i" in scanf
 	 * @param number The maximum number of characters to read
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c signed int variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream i(unsigned long long number, void* value = nullptr)
@@ -2808,7 +2806,7 @@ public:
 
 	/**
 	 * @brief like @c "%li" in scanf
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c signed long variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream li(void* value = nullptr)
@@ -2819,7 +2817,7 @@ public:
 	/**
 	 * @brief like @c "%[number]li" in scanf
 	 * @param number The maximum number of characters to read
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c signed long variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream li(unsigned long long number, void* value = nullptr)
@@ -2829,7 +2827,7 @@ public:
 
 	/**
 	 * @brief like @c "%lli" in scanf
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c signed long long variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream lli(void* value = nullptr)
@@ -2840,7 +2838,7 @@ public:
 	/**
 	 * @brief like @c "%[number]lli" in scanf
 	 * @param number The maximum number of characters to read
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c signed long long variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream lli(unsigned long long number, void* value = nullptr)
@@ -2850,7 +2848,7 @@ public:
 
 	/**
 	 * @brief like @c "%ti" in scanf
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c ptrdiff_t variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream ti(void* value = nullptr)
@@ -2861,7 +2859,7 @@ public:
 	/**
 	 * @brief like @c "%[number]ti" in scanf
 	 * @param number The maximum number of characters to read
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c ptrdiff_t variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream ti(unsigned long long number, void* value = nullptr)
@@ -2871,7 +2869,7 @@ public:
 
 	/**
 	 * @brief like @c "%zi" in scanf
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c size_t variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream zi(void* value = nullptr)
@@ -2882,7 +2880,7 @@ public:
 	/**
 	 * @brief like @c "%[number]zi" in scanf
 	 * @param number The maximum number of characters to read
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c size_t variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream zi(unsigned long long number, void* value = nullptr)
@@ -2892,7 +2890,7 @@ public:
 
 	/**
 	 * @brief like @c "%hhu" in scanf
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to an @c unsigned char variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream hhu(void* value = nullptr)
@@ -2903,7 +2901,7 @@ public:
 	/**
 	 * @brief like @c "%[number]hhu" in scanf
 	 * @param number The maximum number of characters to read
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to an @c unsigned char variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream hhu(unsigned long long number, void* value = nullptr)
@@ -2913,7 +2911,7 @@ public:
 
 	/**
 	 * @brief like @c "%hu" in scanf
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to an @c unsigned short variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream hu(void* value = nullptr)
@@ -2924,7 +2922,7 @@ public:
 	/**
 	 * @brief like @c "%[number]hu" in scanf
 	 * @param number The maximum number of characters to read
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to an @c unsigned short variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream hu(unsigned long long number, void* value = nullptr)
@@ -2934,7 +2932,7 @@ public:
 
 	/**
 	 * @brief like @c "%u" in scanf
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to an @c unsigned int variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream u(void* value = nullptr)
@@ -2945,7 +2943,7 @@ public:
 	/**
 	 * @brief like @c "%[number]u" in scanf
 	 * @param number The maximum number of characters to read
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to an @c unsigned int variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream u(unsigned long long number, void* value = nullptr)
@@ -2955,7 +2953,7 @@ public:
 
 	/**
 	 * @brief like @c "%lu" in scanf
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c unsigned long variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream lu(void* value = nullptr)
@@ -2966,7 +2964,7 @@ public:
 	/**
 	 * @brief like @c "%[number]lu" in scanf
 	 * @param number The maximum number of characters to read
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c unsigned long variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream lu(unsigned long long number, void* value = nullptr)
@@ -2976,7 +2974,7 @@ public:
 
 	/**
 	 * @brief like @c "%llu" in scanf
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c unsigned long long variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream llu(void* value = nullptr)
@@ -2987,7 +2985,7 @@ public:
 	/**
 	 * @brief like @c "%[number]llu" in scanf
 	 * @param number The maximum number of characters to read
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c unsigned long long variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream llu(unsigned long long number, void* value = nullptr)
@@ -2997,7 +2995,7 @@ public:
 
 	/**
 	 * @brief like @c "%tu" in scanf
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c ptrdiff_t variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream tu(void* value = nullptr)
@@ -3008,7 +3006,7 @@ public:
 	/**
 	 * @brief like @c "%[number]tu" in scanf
 	 * @param number The maximum number of characters to read
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c ptrdiff_t variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream tu(unsigned long long number, void* value = nullptr)
@@ -3018,7 +3016,7 @@ public:
 
 	/**
 	 * @brief like @c "%zu" in scanf
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c size_t variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream zu(void* value = nullptr)
@@ -3029,7 +3027,7 @@ public:
 	/**
 	 * @brief like @c "%[number]zu" in scanf
 	 * @param number The maximum number of characters to read
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c size_t variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream zu(unsigned long long number, void* value = nullptr)
@@ -3039,7 +3037,7 @@ public:
 
 	/**
 	 * @brief like @c "%hhx" in scanf
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to an @c unsigned char variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream hhx(void* value = nullptr)
@@ -3050,7 +3048,7 @@ public:
 	/**
 	 * @brief like @c "%[number]hhx" in scanf
 	 * @param number The maximum number of characters to read
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to an @c unsigned char variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream hhx(unsigned long long number, void* value = nullptr)
@@ -3060,7 +3058,7 @@ public:
 
 	/**
 	 * @brief like @c "%hx" in scanf
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to an @c unsigned short variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream hx(void* value = nullptr)
@@ -3071,7 +3069,7 @@ public:
 	/**
 	 * @brief like @c "%[number]hx" in scanf
 	 * @param number The maximum number of characters to read
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to an @c unsigned short variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream hx(unsigned long long number, void* value = nullptr)
@@ -3081,7 +3079,7 @@ public:
 
 	/**
 	 * @brief like @c "%x" in scanf
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to an @c unsigned int variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream x(void* value = nullptr)
@@ -3092,7 +3090,7 @@ public:
 	/**
 	 * @brief like @c "%[number]x" in scanf
 	 * @param number The maximum number of characters to read
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to an @c unsigned int variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream x(unsigned long long number, void* value = nullptr)
@@ -3102,7 +3100,7 @@ public:
 
 	/**
 	 * @brief like @c "%lx" in scanf
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to an @c unsigned long variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream lx(void* value = nullptr)
@@ -3113,7 +3111,7 @@ public:
 	/**
 	 * @brief like @c "%[number]lx" in scanf
 	 * @param number The maximum number of characters to read
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to an @c unsigned long variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream lx(unsigned long long number, void* value = nullptr)
@@ -3123,7 +3121,7 @@ public:
 
 	/**
 	 * @brief like @c "%llx" in scanf
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to an @c unsigned long long variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream llx(void* value = nullptr)
@@ -3134,7 +3132,7 @@ public:
 	/**
 	 * @brief like @c "%[number]llx" in scanf
 	 * @param number The maximum number of characters to read
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to an @c unsigned long long variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream llx(unsigned long long number, void* value = nullptr)
@@ -3144,7 +3142,7 @@ public:
 
 	/**
 	 * @brief like @c "%tx" in scanf
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c ptrdiff_t variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream tx(void* value = nullptr)
@@ -3155,7 +3153,7 @@ public:
 	/**
 	 * @brief like @c "%[number]tx" in scanf
 	 * @param number The maximum number of characters to read
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c ptrdiff_t variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream tx(unsigned long long number, void* value = nullptr)
@@ -3165,7 +3163,7 @@ public:
 
 	/**
 	 * @brief like @c "%zx" in scanf
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c size_t variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream zx(void* value = nullptr)
@@ -3176,7 +3174,7 @@ public:
 	/**
 	 * @brief like @c "%[number]zx" in scanf
 	 * @param number The maximum number of characters to read
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c size_t variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream zx(unsigned long long number, void* value = nullptr)
@@ -3186,7 +3184,7 @@ public:
 
 	/**
 	 * @brief like @c "%hho" in scanf
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to an @c unsigned char variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream hho(void* value = nullptr)
@@ -3197,7 +3195,7 @@ public:
 	/**
 	 * @brief like @c "%[number]hho" in scanf
 	 * @param number The maximum number of characters to read
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to an @c unsigned char variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream hho(unsigned long long number, void* value = nullptr)
@@ -3207,7 +3205,7 @@ public:
 
 	/**
 	 * @brief like @c "%ho" in scanf
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to an @c unsigned short variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream ho(void* value = nullptr)
@@ -3218,7 +3216,7 @@ public:
 	/**
 	 * @brief like @c "%[number]ho" in scanf
 	 * @param number The maximum number of characters to read
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to an @c unsigned short variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream ho(unsigned long long number, void* value = nullptr)
@@ -3228,7 +3226,7 @@ public:
 
 	/**
 	 * @brief like @c "%o" in scanf
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to an @c unsigned int variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream o(void* value = nullptr)
@@ -3239,7 +3237,7 @@ public:
 	/**
 	 * @brief like @c "%[number]o" in scanf
 	 * @param number The maximum number of characters to read
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to an @c unsigned int variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream o(unsigned long long number, void* value = nullptr)
@@ -3249,7 +3247,7 @@ public:
 
 	/**
 	 * @brief like @c "%lo" in scanf
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to an @c unsigned long variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream lo(void* value = nullptr)
@@ -3260,7 +3258,7 @@ public:
 	/**
 	 * @brief like @c "%[number]lo" in scanf
 	 * @param number The maximum number of characters to read
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to an @c unsigned long variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream lo(unsigned long long number, void* value = nullptr)
@@ -3270,7 +3268,7 @@ public:
 
 	/**
 	 * @brief like @c "%llo" in scanf
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to an @c unsigned long long variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream llo(void* value = nullptr)
@@ -3281,7 +3279,7 @@ public:
 	/**
 	 * @brief like @c "%[number]llo" in scanf
 	 * @param number The maximum number of characters to read
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to an @c unsigned long long variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream llo(unsigned long long number, void* value = nullptr)
@@ -3291,7 +3289,7 @@ public:
 
 	/**
 	 * @brief like @c "%to" in scanf
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c ptrdiff_t variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream to(void* value = nullptr)
@@ -3302,7 +3300,7 @@ public:
 	/**
 	 * @brief like @c "%[number]to" in scanf
 	 * @param number The maximum number of characters to read
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c ptrdiff_t variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream to(unsigned long long number, void* value = nullptr)
@@ -3312,7 +3310,7 @@ public:
 
 	/**
 	 * @brief like @c "%zo" in scanf
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c size_t variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream zo(void* value = nullptr)
@@ -3323,7 +3321,7 @@ public:
 	/**
 	 * @brief like @c "%[number]zo" in scanf
 	 * @param number The maximum number of characters to read
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c size_t variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream zo(unsigned long long number, void* value = nullptr)
@@ -3334,7 +3332,7 @@ public:
 	/**
 	 * @brief like @c "%f" in scanf
 	 * @param number The maximum number of characters to read
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c float variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream f(void* value = nullptr)
@@ -3345,7 +3343,7 @@ public:
 	/**
 	 * @brief like @c "%[number]f" in scanf
 	 * @param number The maximum number of characters to read
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c float variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream f(unsigned long long number, void* value = nullptr)
@@ -3356,7 +3354,7 @@ public:
 	/**
 	 * @brief like @c "%lf" in scanf
 	 * @param number The maximum number of characters to read
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c double variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream lf(void* value = nullptr)
@@ -3367,7 +3365,7 @@ public:
 	/**
 	 * @brief like @c "%[number]lf" in scanf
 	 * @param number The maximum number of characters to read
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c double variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream lf(unsigned long long number, void* value = nullptr)
@@ -3378,7 +3376,7 @@ public:
 	/**
 	 * @brief like @c "%Lf" in scanf
 	 * @param number The maximum number of characters to read
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c long double variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream Lf(void* value = nullptr)
@@ -3389,7 +3387,7 @@ public:
 	/**
 	 * @brief like @c "%[number]Lf" in scanf
 	 * @param number The maximum number of characters to read
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c long double variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream Lf(unsigned long long number, void* value = nullptr)
@@ -3400,7 +3398,7 @@ public:
 	/**
 	 * @brief like @c "%c" in scanf
 	 * @param number The maximum number of characters to read
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c char variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream c(void* value = nullptr)
@@ -3411,7 +3409,7 @@ public:
 	/**
 	 * @brief like @c "%[number]c" in scanf
 	 * @param number The maximum number of characters to read
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a string variable or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream c(unsigned long long number, void* value = nullptr)
@@ -3441,7 +3439,7 @@ public:
 
 	/**
 	 * @brief like @c "%p" in scanf
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a void pointer variable or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream p(void* value = nullptr)
@@ -3452,7 +3450,7 @@ public:
 	/**
 	 * @brief like @c "%[number]p" in scanf
 	 * @param number The maximum number of characters to read
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a void pointer variable or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream p(unsigned long long number, void* value = nullptr)
@@ -3462,7 +3460,7 @@ public:
 
 	/**
 	 * @brief like @c "%hhn" in scanf
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c signed char variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream& hhn(void* value = nullptr)
@@ -3472,7 +3470,7 @@ public:
 
 	/**
 	 * @brief like @c "%hn" in scanf
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c signed short variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream& hn(void* value = nullptr)
@@ -3482,7 +3480,7 @@ public:
 
 	/**
 	 * @brief like @c "%n" in scanf
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c signed int variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream& n(void* value = nullptr)
@@ -3492,7 +3490,7 @@ public:
 
 	/**
 	 * @brief like @c "%ln" in scanf
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c signed long variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream& ln(void* value = nullptr)
@@ -3502,7 +3500,7 @@ public:
 
 	/**
 	 * @brief like @c "%lln" in scanf
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c signed long long variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream& lln(void* value = nullptr)
@@ -3512,7 +3510,7 @@ public:
 
 	/**
 	 * @brief like @c "%tn" in scanf
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c ptrdiff_t variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream& tn(void* value = nullptr)
@@ -3522,7 +3520,7 @@ public:
 
 	/**
 	 * @brief like @c "%zn" in scanf
-	 * @param value Pointer to an integer variable or @c nullptr if you don't want to read the value
+	 * @param value Pointer to a @c size_t variables or @c nullptr if you don't want to read the value
 	 * @return the class itself
 	 */
 	scanner_stream& zn(void* value = nullptr)
