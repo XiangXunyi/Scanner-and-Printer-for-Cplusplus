@@ -2155,6 +2155,75 @@ private:
 		}
 
 		/**
+		 * @brief like @c "%[characters]" in scanf
+		 * @param scanset Pointer to a bool array that describe a scanset
+		 * @param value Pointer to a string variable or @c nullptr if you don't want to read the value
+		 * @return a scanner stream
+		 */
+		scanner_stream& scanlist(const bool* scanset, void* value = nullptr)
+		{
+			if (!success)
+				return *this;
+			success = false;
+			while (true)
+			{
+				int val = sc->_readchar();
+				if (!scanset[val] || val == -1)
+					break;
+				sc->_nextchar();
+				++charsRead;
+				if (value)
+					*(((char*&)(value))++) = val;
+				success = true;
+			}
+			if (success)
+			{
+				*(((char*&)(value))++) = 0;
+				if (value)
+					++res;
+			}
+			else
+				if (sc->eof && res == 0)
+					res = -1;
+			return *this;
+		}
+
+		/**
+		 * @brief like @c "%[number][characters]" in scanf
+		 * @param scanset Pointer to a bool array that describe a scanset
+		 * @param value Pointer to a string variable or @c nullptr if you don't want to read the value
+		 * @return a scanner stream
+		 */
+		scanner_stream& scanlist(unsigned long long number, const bool* scanset, void* value = nullptr)
+		{
+			if (!success)
+				return *this;
+			success = false;
+			while (number)
+			{
+				int val = sc->_readchar();
+				if (!scanset[val] || val == -1)
+					break;
+				sc->_nextchar();
+				++charsRead;
+				--number;
+				if (value)
+					*(((char*&)(value))++) = val;
+				success = true;
+			}
+			if (success)
+			{
+				*(((char*&)(value))++) = 0;
+				if (value)
+					++res;
+			}
+			else
+				if (sc->eof && res == 0)
+					res = -1;
+			return *this;
+		}
+
+		/**
 		 * @brief like @c "%p" in scanf
 		 * @param value Pointer to a void pointer variable or @c nullptr if you don't want to read the value
 		 * @return a scanner stream
