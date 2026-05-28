@@ -2224,6 +2224,39 @@ private:
 		}
 
 		/**
+		 * @brief read the given string
+		 * @param scanset Pointer to a string
+		 * @return a scanner stream
+		 * @note you should use @c % to mean a @c % instead of @c %%
+		 */
+		scanner_stream& match(const char* str)
+		{
+			if (!success)
+				return *this;
+			while (*str)
+			{
+				if (*str == ' ' || *str == '\t' || *str == '\n' || *str == '\v' || *str == '\f' || *str == '\r')
+					sc->_skipspace(charsRead);
+				else
+				{
+					int val = sc->_readchar();
+					if (val != *str || val == -1)
+					{
+						success = false;
+						break;
+					}
+					sc->_nextchar();
+					++charsRead;
+				}
+				++str;
+			}
+			if (!success)
+				if (sc->eof && res == 0)
+					res = -1;
+			return *this;
+		}
+
+		/**
 		 * @brief like @c "%p" in scanf
 		 * @param value Pointer to a void pointer variable or @c nullptr if you don't want to read the value
 		 * @return a scanner stream
@@ -3675,6 +3708,39 @@ public:
 	scanner_stream scanlist(unsigned long long number, const char* characters, void* value = nullptr)
 	{
 		return scanner_stream(this).scanlist(number, characters, value);
+	}
+
+	/**
+	 * @brief like @c "%[characters]" in scanf
+	 * @param scanset Pointer to a bool array that describe a scanset
+	 * @param value Pointer to a string variable or @c nullptr if you don't want to read the value
+	 * @return a scanner stream
+	 */
+	scanner_stream scanlist(const bool* scanset, void* value = nullptr)
+	{
+		return scanner_stream(this).scanlist(scanset, value);
+	}
+
+	/**
+	 * @brief like @c "%[number][characters]" in scanf
+	 * @param scanset Pointer to a bool array that describe a scanset
+	 * @param value Pointer to a string variable or @c nullptr if you don't want to read the value
+	 * @return a scanner stream
+	 */
+	scanner_stream scanlist(unsigned long long number, const bool* scanset, void* value = nullptr)
+	{
+		return scanner_stream(this).scanlist(number, scanset, value);
+	}
+
+	/**
+	 * @brief read the given string
+	 * @param scanset Pointer to a string
+	 * @return a scanner stream
+	 * @note you should use @c % to mean a @c % instead of @c %%
+	 */
+	scanner_stream match(const char* str)
+	{
+		return scanner_stream(this).match(str);
 	}
 
 	/**
